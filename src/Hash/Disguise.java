@@ -1,6 +1,9 @@
 package Hash;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class Disguise {
     public static void main(String[] args) {
@@ -9,33 +12,21 @@ public class Disguise {
     }
 
     public static int solution(String[][] clothes) {
-        int answer = 0;
+        int answer = 1;
 
-        answer += clothes.length;
         HashMap<String, Integer> map = new HashMap<String,Integer>();
         ArrayList<String> list = new ArrayList<>();
 
-
         for (int i = 0; i < clothes.length; i++) {
             map.put(clothes[i][1],map.getOrDefault(clothes[i][1],0)+1);
-            if(!list.contains(clothes[i][1])) {
-                list.add(clothes[i][1]);
-            }
         }
 
-        for (int i = 2; i <= map.size(); i++) {
-            for (int j = 0; j < list.size(); j++) {
-                int flag = 1;
-                flag *= map.get(list.get(j));
-                for (int k = j+1; k < list.size() ; k++) {
-                    flag *= map.get(list.get(k));
-                }
-                answer += flag;
-            }
+        Iterator<Integer> it = map.values().iterator();
+        while (it.hasNext()) {
+            answer *= (it.next().intValue()+1);
         }
 
-
-        System.out.println(map);
+        answer -= 1;
         return answer;
     }
 }
