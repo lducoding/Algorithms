@@ -1,6 +1,7 @@
 package Hash;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BestAlbum {
     public static void main(String[] args) {
@@ -24,9 +25,28 @@ public class BestAlbum {
         }
         Collections.sort(list,Collections.reverseOrder());
 
-        System.out.println("value로 key 구해야함");
+        for (int val : list) {
+            String keyList =  getKey(map, val);
+            rankList.add(keyList);
+        }
 
+        for(String rank : rankList) {
+            for (int i = 0; i < genres.length; i++) {
+
+            }
+        }
+        System.out.println(rankList);
 
         return answer;
+    }
+
+    public static <K, V> K getKey(Map<K, V> map, V value) {
+
+        for (K key : map.keySet()) {
+            if (value.equals(map.get(key))) {
+                return key;
+            }
+        }
+        return null;
     }
 }
