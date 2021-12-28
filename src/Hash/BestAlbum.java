@@ -11,9 +11,20 @@ public class BestAlbum {
         System.out.println(solution(genre,plays));
     }
 
+    static class BestSong {
+        String gen = "";
+        int play = 0;
+        int idx = 0;
+
+        public BestSong(String gen, int play, int idx) {
+            this.gen = gen;
+            this.play = play;
+            this.idx = idx;
+        }
+    }
+
     public static int[] solution(String[] genres, int[] plays) {
 
-        int[] answer = {};
         HashMap<String,Integer> map = new HashMap<String,Integer>();
 
         for(int i = 0; i < genres.length; i++) {
@@ -33,7 +44,6 @@ public class BestAlbum {
             rankList.add(max_gen);
             map.remove(max_gen);
         }
-        System.out.println(rankList);
 
         ArrayList<BestSong> resultList = new ArrayList<>();
         for (String gen : rankList) {
@@ -43,21 +53,24 @@ public class BestAlbum {
                     semiResult.add(new BestSong(genres[i],plays[i],i));
                 }
             }
-            
+            Collections.sort(semiResult, (o1, o2) -> o2.play - o1.play);
+
+            if(semiResult.size() > 1) {
+                for (int i = 0; i < 2; i++) {
+                    resultList.add(semiResult.get(i));
+                }
+            } else {
+                resultList.add(semiResult.get(0));
+            }
+        }
+
+        int[] answer = new int[resultList.size()];
+        for (int i = 0; i < resultList.size(); i++) {
+            answer[i] = resultList.get(i).idx;
         }
 
         return answer;
     }
 
 }
-class BestSong {
-        String gen = "";
-        int play = 0;
-        int idx = 0;
 
-        public BestSong(String gen, int play, int idx) {
-            this.gen = gen;
-            this.play = play;
-            this.idx = idx;
-        }
-}
