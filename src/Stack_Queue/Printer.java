@@ -1,6 +1,6 @@
 package Stack_Queue;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -14,36 +14,29 @@ public class Printer {
     public static int solution(int[] priorities, int location) {
         int answer = 0;
         Queue<Integer> queue = new LinkedList<>();
-        Queue<Integer> queue2 = new LinkedList<>();
-        ArrayList<Integer> prioList = new ArrayList<>();
-        ArrayList<Integer> orderList = new ArrayList<>();
 
         for (int i = 0; i < priorities.length; i++) {
             queue.offer(priorities[i]);
-            queue2.offer(i);
         }
+
+        Arrays.sort(priorities);
+
+        int size = priorities.length-1;
 
         while (!queue.isEmpty()) {
             int qNum = queue.poll();
-            int qOrdNum = queue2.poll();
-            int check = 0;
-            for (int i = 0; i < priorities.length; i++) {
-                if(qNum < priorities[i] && priorities[i] != 0 && check != 1) {
-                    queue.offer(qNum);
-                    queue2.offer(qOrdNum);
-                    check++;
+            if(qNum == priorities[size-answer]) {
+                answer++;
+                location--;
+                if(location < 0) {
+                    break;
                 }
-            }
-            if(check == 0) {
-                priorities[qOrdNum] = 0;
-                prioList.add(qNum);
-                orderList.add(qOrdNum);
-            }
-        }
-
-        for (int i = 0; i < orderList.size(); i++) {
-            if(location == orderList.get(i)) {
-                answer = i+1;
+            } else {
+                queue.add(qNum);
+                location--;
+                if(location < 0) {
+                    location = queue.size()-1;
+                }
             }
         }
 
