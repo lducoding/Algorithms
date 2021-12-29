@@ -14,28 +14,38 @@ public class Printer {
     public static int solution(int[] priorities, int location) {
         int answer = 0;
         Queue<Integer> queue = new LinkedList<>();
+        Queue<Integer> queue2 = new LinkedList<>();
         ArrayList<Integer> prioList = new ArrayList<>();
         ArrayList<Integer> orderList = new ArrayList<>();
 
         for (int i = 0; i < priorities.length; i++) {
             queue.offer(priorities[i]);
+            queue2.offer(i);
         }
+
         while (!queue.isEmpty()) {
             int qNum = queue.poll();
+            int qOrdNum = queue2.poll();
             int check = 0;
             for (int i = 0; i < priorities.length; i++) {
-                if(qNum < priorities[i] && priorities[i] != 0) {
-                    queue.offer(priorities[i]);
+                if(qNum < priorities[i] && priorities[i] != 0 && check != 1) {
+                    queue.offer(qNum);
+                    queue2.offer(qOrdNum);
                     check++;
                 }
             }
             if(check == 0) {
-
-                System.out.println(qNum);
+                priorities[qOrdNum] = 0;
+                prioList.add(qNum);
+                orderList.add(qOrdNum);
             }
         }
-        System.out.println(prioList);
-        System.out.println(orderList);
+
+        for (int i = 0; i < orderList.size(); i++) {
+            if(location == orderList.get(i)) {
+                answer = i+1;
+            }
+        }
 
         return answer;
     }
