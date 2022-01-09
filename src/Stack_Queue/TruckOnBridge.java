@@ -1,9 +1,8 @@
 package Stack_Queue;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
+import com.sun.jmx.remote.internal.ArrayQueue;
+
+import java.util.*;
 
 public class TruckOnBridge {
     public static void main(String[] args) {
@@ -15,18 +14,31 @@ public class TruckOnBridge {
 
     public static int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
-
         Queue<Integer> queue = new LinkedList<>();
+        int max = 0;
 
-        Arrays.sort(truck_weights);
-
-        int size = truck_weights.length-1;
-
-        for (int i = size; i >= 0; i--) {
-            queue.offer(truck_weights[i]);
+        for (int i = 0; i < truck_weights.length; i++) {
+            while (true) {
+                if(queue.isEmpty()) {
+                    queue.offer(truck_weights[i]);
+                    max += truck_weights[i];
+                    answer++;
+                    break;
+                } else if(queue.size() == bridge_length) {
+                    max -= queue.poll();
+                } else {
+                    if(max + truck_weights[i] > weight) {
+                            queue.offer(0);
+                            answer++;
+                    } else {
+                        queue.offer(truck_weights[i]);
+                        max += truck_weights[i];
+                        answer++;
+                        break;
+                    }
+                }
+            }
         }
-        System.out.println(queue.poll());
-
-        return answer;
+        return answer + bridge_length;
     }
 }
