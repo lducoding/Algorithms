@@ -16,22 +16,23 @@ public class DiscController {
         Arrays.sort(jobs, (o1, o2) -> o1[0] - o2[0]);
         // 작업 순서로 담음
         PriorityQueue<int[]> heap = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
-        time += jobs[0][1];
-        answer = time - jobs[0][0];
-        for (int i = 1; i < jobs.length; i++) {
-            heap.add(jobs[i]);
-        }
-        while (true) {
-            if(time >= heap.peek()[0]) {
-                System.out.println("실행:"+heap.peek()[1]);
-                int temp = heap.peek()[0];
-                time += heap.poll()[1];
-                answer += time - temp;
-                if(heap.size()==0) {
-                    break;
-                }
+        int count = 0;
+        int index = 0;
+        time = jobs[0][0];
+        while(count<jobs.length){
+            while(index<jobs.length && time >= jobs[index][0]){
+                heap.offer(jobs[index++]);
+            }
+            if(!heap.isEmpty()) {
+                int[] current = heap.poll();
+                time+=current[1];
+                answer+=time-current[0];
+                count++;
+            } else {
+                time = jobs[index][0];
             }
         }
-        return answer/ jobs.length;
+        return answer/jobs.length;
+
     }
 }
