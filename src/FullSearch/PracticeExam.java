@@ -2,6 +2,7 @@ package FullSearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class PracticeExam {
     public static void main(String[] args) {
@@ -19,24 +20,18 @@ public class PracticeExam {
         //수포자2  2,1,2,3,2,4,2,5
         //수포자3  3,3,1,1,2,2,4,4,5,5
         int[][] supoza = {supo1,supo2,supo3};
-        int ck = 0;
+        int[] count = new int[3];
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < supoza.length; i++) {
-            int count = 0;
             for (int j = 0; j < answers.length; j++) {
-                int chk = ((j+1) % supoza[i].length) -1;
-                if(chk<0) {
-                    if(supoza[i][(supoza[i].length-1)] == answers[j]) {
-                        count++;
-                    }
-                } else {
-                    if(supoza[i][chk] == answers[j]) {
-                        count++;
-                    }
+                if(supoza[i][j % supoza[i].length] == answers[j]) {
+                    count[i]++;
                 }
             }
-            if(ck<=count) {
-                ck = count;
+        }
+        int max = Math.max(count[0],Math.max(count[1],count[2]));
+        for (int i = 0; i < count.length; i++) {
+            if(max == count[i]) {
                 list.add(i+1);
             }
         }
