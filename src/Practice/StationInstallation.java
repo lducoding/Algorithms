@@ -6,41 +6,32 @@ import java.util.stream.IntStream;
 
 public class StationInstallation {
     public static void main(String[] args) {
-        int[] stations = {9};
-        int solution = solution(16, stations, 2);
+        int[] stations = {2,5,9};
+        int solution = solution(11, stations, 1);
         System.out.println(solution);
     }
 
     public static int solution(int n, int[] stations, int w) {
         int answer = 0;
-        int count = 0;
-        List<Integer> integerList = new ArrayList<>();
-        List<Integer> rangeList = new ArrayList<>();
-        for (int i = 1; i <=n; i++) {
-            integerList.add(i);
-        }
+        int startsNum = 1;
         for (int i : stations) {
-            IntStream.rangeClosed(i-w, i+w).forEach(o -> integerList.remove(Integer.valueOf(o)));
-        }
-//        for (int i : stations) {
-//            for (int j = i-w; j <= i+w; j++) {
-//                integerList.remove(Integer.valueOf(j));
-//            }
-//        }
-        for (int i = 0; i < integerList.size(); i++) {
-            if(i != integerList.size()-1 && integerList.get(i) + 1 == integerList.get(i+1)) {
-                count++;
-            } else {
-                count++;
-                rangeList.add(count);
-                count = 0;
+            if((i -w) > startsNum) {
+                int between = (i - w) - startsNum;
+                if(between % ((w*2)+1) == 0) {
+                    answer += between / ((w*2)+1);
+                } else {
+                    answer += between / ((w*2)+1);
+                    answer++;
+                }
             }
+            startsNum = i+w+1;
         }
-        for (int i : rangeList) {
-            if(i%((w*2)+1) == 0 ) {
-                answer += i/((w*2)+1);
+        if(startsNum <= n) {
+            int between = n-(startsNum-1);
+            if(between % ((w*2)+1) == 0) {
+                answer += between / ((w*2)+1);
             } else {
-                answer += i/((w*2)+1) +1;
+                answer += between / ((w*2)+1) + 1;
             }
         }
         return answer;
