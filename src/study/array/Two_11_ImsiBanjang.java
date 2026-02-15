@@ -1,7 +1,6 @@
 package study.array;
 
 import java.util.Scanner;
-import kakao.Solution;
 
 public class Two_11_ImsiBanjang {
 
@@ -9,9 +8,9 @@ public class Two_11_ImsiBanjang {
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int n = in.nextInt();
-    int[][] arr = new int[n][n];
+    int[][] arr = new int[n][5];
     for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
+      for (int j = 0; j < 5; j++) {
         arr[i][j] = in.nextInt();
       }
     }
