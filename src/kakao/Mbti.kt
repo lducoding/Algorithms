@@ -6,10 +6,10 @@ import kotlin.math.abs
 fun main() {
     val survey = arrayOf("AN", "CF", "MJ", "RT", "NA")
     val choices = intArrayOf(5, 3, 2, 7, 5)
-    val s = Solution()
-    println( s.solution(survey, choices) )
+//    val s = Solution(3, );
+//    println( s.solution(survey, choices) )
 }
-class Solution {
+class Solution(n: Int, arr: Array<IntArray>) {
     fun solution(survey: Array<String>, choices: IntArray): String {
         var answer = StringBuilder()
         val map = mutableMapOf<Char, Int>(
